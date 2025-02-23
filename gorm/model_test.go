@@ -16,11 +16,13 @@ func TestCreate(t *testing.T) {
 	t.Parallel()
 	db := db.Debug()
 
+	now := time.Now()
 	r := &Resource{
 		Value: "value",
 		Events: Events{
 			{
 				Value: "value",
+				Date:  now,
 			},
 		},
 	}
@@ -39,6 +41,8 @@ func TestCreate(t *testing.T) {
 	var r3 *Resource
 	require.NoError(t, db.Preload("Events").First(&r3, r.ID).Error)
 	require.Len(t, r3.Events, 2)
+	// Verify that the date in the first event is stored correctly
+	require.WithinDuration(t, now, r3.Events[0].Date, time.Second)
 }
 
 func TestCreate2(t *testing.T) {

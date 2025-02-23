@@ -1,6 +1,10 @@
 package gorm
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Resource struct {
 	gorm.Model
@@ -12,6 +16,7 @@ type Event struct {
 	gorm.Model
 	ResourceID uint
 	Value      string
+	Date       time.Time `grom:"type:date"`
 }
 
 type Events []*Event
