@@ -15,11 +15,11 @@ func TestMain(m *testing.M) {
 		QueryFields: true,
 	}
 	var err error
-	db, err = gorm.Open(postgres.New(postgres.Config{DSN: "postgres://postgres:postgres@localhost:5433/postgres?sslmode=disable"}), gormConfig)
+	db, err = gorm.Open(postgres.New(postgres.Config{DSN: "postgres://postgres:postgres@localhost:5433/postgres?sslmode=disable&timezone=Asia/Tokyo"}), gormConfig)
 	if err != nil {
 		panic(err)
 	}
-	if err = db.AutoMigrate(&Resource{}, &Event{}, &DupTest{}); err != nil {
+	if err = db.AutoMigrate(models...); err != nil {
 		panic(err)
 	}
 	os.Exit(m.Run())

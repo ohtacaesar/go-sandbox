@@ -12,13 +12,15 @@ import (
 	"gorm.io/gorm"
 )
 
+var JST = time.FixedZone("Asia/Tokyo", 9*60*60)
+
 func TestCreate(t *testing.T) {
 	t.Parallel()
 	db := db.Debug()
 
 	now := time.Now()
 	r := &Resource{
-		Value: "value",
+		Value: 1,
 		Events: Events{
 			{
 				Value: "value",
@@ -27,7 +29,7 @@ func TestCreate(t *testing.T) {
 		},
 	}
 	require.NoError(t, db.Create(r).Error)
-	r.Value = "value2"
+	r.Value = 2
 	require.NoError(t, db.Save(r).Error)
 	r.Events[0].Value = "value2" // これは反映されない
 	require.NoError(t, db.Save(r).Error)

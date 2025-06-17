@@ -6,9 +6,19 @@ import (
 	"gorm.io/gorm"
 )
 
+var models []any
+
+func init() {
+	models = append(models,
+		&Resource{},
+		&Event{},
+		&DupTest{},
+	)
+}
+
 type Resource struct {
 	gorm.Model
-	Value  string
+	Value  int
 	Events Events
 }
 
